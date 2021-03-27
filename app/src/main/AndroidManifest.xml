@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineElectronicStore">
-        <activity android:name=".HomePageActivity"></activity>
+        <activity android:name=".AllProductsForSaleActivity"></activity>
+        <activity android:name=".AddProductActivity" />
         <activity android:name=".RegisterAccountActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
