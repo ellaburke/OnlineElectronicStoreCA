@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "827211248776",
+    "project_id": "onlineelectronicstore-c14d5",
+    "storage_bucket": "onlineelectronicstore-c14d5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827211248776:android:6d0420e191e3d2dc9cdb3d",
+        "android_client_info": {
+          "package_name": "com.example.onlineelectronicstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "827211248776-00n2mmfjdqak494b7t7tfgjbagrfh52n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFTiPJznZPL9KYDsnb-em_PN3s_ISBkdk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "827211248776-00n2mmfjdqak494b7t7tfgjbagrfh52n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
