@@ -30,4 +30,5 @@
     <string name="products">Products</string>
     <string name="my_profile">My Profile</string>
     <string name="cart">Cart</string>
+    <string name="saved_card_details">Saved Card Details</string>
 </resources>

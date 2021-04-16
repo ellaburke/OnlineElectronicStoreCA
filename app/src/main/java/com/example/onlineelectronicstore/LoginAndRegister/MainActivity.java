@@ -1,4 +1,4 @@
-package com.example.onlineelectronicstore;
+package com.example.onlineelectronicstore.LoginAndRegister;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.onlineelectronicstore.Admin.AddProductActivity;
+import com.example.onlineelectronicstore.Customer.AllProductsForSaleActivity;
+import com.example.onlineelectronicstore.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
 
     //UI Variables
-    EditText emailET, passwordET;
+    EditText emailET, passwordET, adminET;
     Button adminBtn, loginBtn;
     TextView createAccountTV;
 
@@ -38,9 +41,12 @@ public class MainActivity extends AppCompatActivity {
         //Init UI Variables
         emailET = (EditText) findViewById(R.id.emailET);
         passwordET = (EditText) findViewById(R.id.passwordET);
+        adminET = (EditText) findViewById(R.id.adminIDET);
         adminBtn = (Button) findViewById(R.id.adminBtn);
         loginBtn = (Button) findViewById(R.id.logInBtn);
         createAccountTV = (TextView) findViewById(R.id.createAccountTV);
+
+        adminET.setEnabled(false);
 
         createAccountTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,24 +62,29 @@ public class MainActivity extends AppCompatActivity {
                 //Home Page
                 String email = emailET.getText().toString();
                 String password = passwordET.getText().toString();
+                String adminID = adminET.getText().toString();
 
-                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Intent intent = new Intent(MainActivity.this, AllProductsForSaleActivity.class);
-                            startActivity(intent);
-
-                        }
-                        else {
+                            if(adminID.equals("12345")) {
+                                Intent intent = new Intent(MainActivity.this, AddProductActivity.class);
+                                startActivity(intent);
+                            }else if(!adminID.equals("12345")){
+                                Intent intent = new Intent(MainActivity.this, AllProductsForSaleActivity.class);
+                                startActivity(intent);
+                            }
+                        } else {
+                            adminET.setError("Incorrect Admin Code");
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-
                         }
                     }
+
                 });
             }
         });
@@ -82,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Admin log in
+                adminET.setEnabled(true);
             }
         });
-
     }
 }

@@ -1,4 +1,4 @@
-package com.example.onlineelectronicstore;
+package com.example.onlineelectronicstore.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
@@ -18,10 +19,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.onlineelectronicstore.R;
+import com.example.onlineelectronicstore.UpdateStock.UpdateStockActivity;
 import com.example.onlineelectronicstore.model.Products;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -59,7 +63,7 @@ public class AddProductActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.activity_product_add);
 
         //Init Firebase
         mStorageRef = FirebaseStorage.getInstance().getReference("products");
@@ -100,6 +104,28 @@ public class AddProductActivity extends AppCompatActivity {
                 uploadFile();
                 Intent addProductActivity = new Intent(AddProductActivity.this, AddProductActivity.class);
                 startActivity(addProductActivity);
+            }
+        });
+
+        //Init btm nav
+        BottomNavigationView bottomNavigationView = findViewById(R.id.admin_navigation_menu);
+
+        //Set Home Selected
+        bottomNavigationView.setSelectedItemId(R.id.ProductsNav);
+
+        //Perform ItemSelectedListener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.AddProductsNav:
+                        return true;
+                    case R.id.UpdateStockNav:
+                        startActivity(new Intent(getApplicationContext(), UpdateStockActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+                return false;
             }
         });
 

@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.onlineelectronicstore">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,16 +16,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineElectronicStore">
-        <activity android:name=".AllProductsForSaleActivity"></activity>
-        <activity android:name=".AddProductActivity" />
-        <activity android:name=".RegisterAccountActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".UpdateStock.UpdateStockActivity"
+            android:windowSoftInputMode="adjustNothing"></activity>
+        <activity android:name=".Customer.CustomerProfileActivity"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".Customer.AllProductsForSaleActivity"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".Admin.AddProductActivity"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".LoginAndRegister.RegisterAccountActivity"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".LoginAndRegister.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

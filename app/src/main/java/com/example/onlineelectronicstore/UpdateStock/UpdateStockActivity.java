@@ -1,4 +1,4 @@
-package com.example.onlineelectronicstore;
+package com.example.onlineelectronicstore.UpdateStock;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.onlineelectronicstore.Admin.AddProductActivity;
+import com.example.onlineelectronicstore.Customer.Adapter;
+import com.example.onlineelectronicstore.R;
 import com.example.onlineelectronicstore.model.Products;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -22,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllProductsForSaleActivity extends AppCompatActivity {
+public class UpdateStockActivity extends AppCompatActivity {
 
     //Firebase
     DatabaseReference mDatabaseRef;
@@ -38,41 +41,38 @@ public class AllProductsForSaleActivity extends AppCompatActivity {
     //SearchView
     SearchView mSearchView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_products_for_sale);
+        setContentView(R.layout.activity_update_stock);
 
         //Init RCV
-        mRecyclerView = findViewById(R.id.productRecyclerView);
+        mRecyclerView = findViewById(R.id.adminProductRecyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         myProducts = new ArrayList<>();
         //Init Firebase
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("products");
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mSearchView = findViewById(R.id.searchView);
+        mSearchView = findViewById(R.id.adminSearchView);
+
 
         //Init btm nav
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.admin_navigation_menu);
 
         //Set Home Selected
-        bottomNavigationView.setSelectedItemId(R.id.ProductsNav);
+        bottomNavigationView.setSelectedItemId(R.id.UpdateStockNav);
 
         //Perform ItemSelectedListener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.ProductsNav:
+                    case R.id.AddProductsNav:
+                        startActivity(new Intent(getApplicationContext(), AddProductActivity.class));
+                        overridePendingTransition(0, 0);
                         return true;
-                    case R.id.MyProfileNav:
-                        //startActivity(new Intent(getApplicationContext(), MyProfile.class));
-                        //overridePendingTransition(0, 0);
-                    case R.id.MyCartNav:
-                        //startActivity(new Intent(getApplicationContext(), MyCart.class));
-                        //overridePendingTransition(0, 0);
+                    case R.id.UpdateStockNav:
                         return true;
                 }
                 return false;
@@ -86,13 +86,13 @@ public class AllProductsForSaleActivity extends AppCompatActivity {
                     Products products = postSnapshot.getValue(Products.class);
                     myProducts.add(products);
                 }
-                mAdapter = new Adapter(AllProductsForSaleActivity.this, (ArrayList<Products>) myProducts);
+                mAdapter = new Adapter(UpdateStockActivity.this, (ArrayList<Products>) myProducts);
                 mRecyclerView.setAdapter(mAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(AllProductsForSaleActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateStockActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -121,7 +121,7 @@ public class AllProductsForSaleActivity extends AppCompatActivity {
                 list.add(obj);
             }
         }
-        Adapter adapterClass = new Adapter(AllProductsForSaleActivity.this, (ArrayList<Products>) list);
+        Adapter adapterClass = new Adapter(UpdateStockActivity.this, (ArrayList<Products>) list);
         mRecyclerView.setAdapter(adapterClass);
     }
 }
