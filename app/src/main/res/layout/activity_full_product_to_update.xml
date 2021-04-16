@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UpdateStock.FullProductToUpdate">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#D6E5F1"
+                    android:orientation="horizontal" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/fullProductDisplayImage1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_baseline_add_circle_outline_24" />
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/fullProductDisplayTitle1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/title"
+                        android:textColor="#0B0A0A"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fProductDisplayDescription1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/fullProductDisplayTitle1"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="5dp"
+                        android:maxLength="250"
+                        android:text="@string/description"
+                        android:textColor="#0B0A0A"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                    <EditText
+                        android:id="@+id/fullProductDisplayDescription1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/fProductDisplayDescription1"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:maxLength="250"
+                        android:text="@string/description"
+                        android:textColor="#0B0A0A"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/fProductDisplayCategory1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/fullProductDisplayDescription1"
+                        android:layout_marginStart="20dp"
+                        android:text="@string/category"
+                        android:textColor="#0B0A0A"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/fullProductDisplayCategory1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:layout_below="@+id/fProductDisplayCategory1"
+                        android:layout_marginStart="20dp"
+                        android:text="@string/category"
+                        android:textColor="#0B0A0A"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/fProductDisplayManufacturer1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/fullProductDisplayCategory1"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:text="@string/manufacturer"
+                        android:textColor="#0B0A0A"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/fullProductManufacturer1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/fProductDisplayManufacturer1"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:text="@string/manufacturer"
+                        android:textColor="#0B0A0A"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/fListingDisplayPrice1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/fullProductManufacturer1"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:maxLength="100"
+                        android:text="@string/price"
+                        android:textColor="#0B0A0A"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/fullProductDisplayPrice1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/fListingDisplayPrice1"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:maxLength="100"
+                        android:text="@string/price"
+                        android:textColor="#0B0A0A"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/fProductDisplayStock1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/fullProductDisplayPrice1"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:text="@string/stock"
+                        android:textColor="#0B0A0A"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/fullProductDisplayStock"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/fProductDisplayStock1"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:text="@string/stock"
+                        android:textColor="#0B0A0A"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/updateStockBtn"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="60dp"
+                    android:background="@drawable/custom_button"
+                    android:text="@string/update_stock"
+                    />
+
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/admin_navigation_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/app_blue"
+            app:itemBackground="@color/app_blue"
+            app:itemIconTint="@drawable/selector"
+            app:itemTextColor="@drawable/selector"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:menu="@menu/admin_navigation_menu" />
+
+    </RelativeLayout>
+</RelativeLayout>

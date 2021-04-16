@@ -16,16 +16,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineElectronicStore">
-        <activity android:name=".UpdateStock.UpdateStockActivity"
-            android:windowSoftInputMode="adjustNothing"></activity>
-        <activity android:name=".Customer.CustomerProfileActivity"
-            android:windowSoftInputMode="adjustNothing"/>
-        <activity android:name=".Customer.AllProductsForSaleActivity"
-            android:windowSoftInputMode="adjustNothing"/>
-        <activity android:name=".Admin.AddProductActivity"
-            android:windowSoftInputMode="adjustNothing"/>
-        <activity android:name=".LoginAndRegister.RegisterAccountActivity"
-            android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".UpdateStock.FullProductToUpdate"
+            android:windowSoftInputMode="adjustNothing" ></activity>
+        <activity
+            android:name=".UpdateStock.UpdateStockActivity"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".Customer.CustomerProfileActivity"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".Customer.AllProductsForSaleActivity"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".Admin.AddProductActivity"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".LoginAndRegister.RegisterAccountActivity"
+            android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".LoginAndRegister.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

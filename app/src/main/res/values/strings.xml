@@ -31,4 +31,10 @@
     <string name="my_profile">My Profile</string>
     <string name="cart">Cart</string>
     <string name="saved_card_details">Saved Card Details</string>
+    <string name="title">Title</string>
+    <string name="category">Category</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="price">Price</string>
+    <string name="stock">Stock</string>
+    <string name="update_stock">Update Stock</string>
 </resources>

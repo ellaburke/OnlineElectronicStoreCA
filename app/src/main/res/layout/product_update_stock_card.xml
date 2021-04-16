@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    android:elevation="5dp"
+    android:id="@+id/productStockUpdate">
+
+    <RelativeLayout
+        android:id="@+id/stockRelLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff">
+
+        <TextView
+            android:id="@+id/productTitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="8dp"
+            android:text="Product Title"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/productImage1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp" />
+
+        <Button
+            android:layout_width="230dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/productTitle1"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/custom_button"
+            android:textColor="#fff"
+            android:text="Update Stock Levels"
+            android:id="@+id/updateStockBtn"/>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

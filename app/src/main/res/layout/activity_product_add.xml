@@ -2,21 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context=".Admin.AddProductActivity">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
-
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -26,12 +23,6 @@
                 android:layout_marginRight="10dp"
                 app:cardCornerRadius="8dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#70A9CFE1"
-                    android:orientation="horizontal" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -39,6 +30,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/upload_photo"
                     android:textStyle="bold" />
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -56,7 +48,6 @@
 
 
             </androidx.cardview.widget.CardView>
-
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -122,11 +113,22 @@
                         android:hint="Price"
                         android:maxLength="250" />
 
+                    <EditText
+                        android:id="@+id/stock_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/price_et"
+                        android:layout_centerHorizontal="true"
+                        android:inputType="number"
+                        android:layout_marginLeft="20dp"
+                        android:hint="Stock"
+                        android:maxLength="250" />
+
                     <Spinner
                         android:id="@+id/product_category_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_below="@+id/price_et"
+                        android:layout_below="@+id/stock_et"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="20dp"
                         android:spinnerMode="dropdown" />
@@ -146,7 +148,7 @@
                     android:layout_height="48dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="60dp"
                     android:background="@drawable/custom_button"
                     android:text="@string/add_product"
                     android:textColor="#fff"
@@ -155,7 +157,10 @@
 
 
         </LinearLayout>
+
+
     </ScrollView>
+
 
     <RelativeLayout
         android:layout_width="match_parent"

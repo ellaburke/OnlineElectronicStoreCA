@@ -8,11 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.onlineelectronicstore.Admin.AddProductActivity;
 import com.example.onlineelectronicstore.Customer.Adapter;
+import com.example.onlineelectronicstore.LoginAndRegister.MainActivity;
+import com.example.onlineelectronicstore.LoginAndRegister.RegisterAccountActivity;
 import com.example.onlineelectronicstore.R;
 import com.example.onlineelectronicstore.model.Products;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -25,13 +28,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpdateStockActivity extends AppCompatActivity {
+public class UpdateStockActivity extends AppCompatActivity implements UpdateStockAdapter.OnListingListener{
 
     //Firebase
     DatabaseReference mDatabaseRef;
 
     //Product
     private List<Products> myProducts;
+    String productID;
 
     //RCV
     RecyclerView mRecyclerView;
@@ -86,7 +90,7 @@ public class UpdateStockActivity extends AppCompatActivity {
                     Products products = postSnapshot.getValue(Products.class);
                     myProducts.add(products);
                 }
-                mAdapter = new Adapter(UpdateStockActivity.this, (ArrayList<Products>) myProducts);
+                mAdapter = new UpdateStockAdapter(UpdateStockActivity.this, (ArrayList<Products>) myProducts, UpdateStockActivity.this);
                 mRecyclerView.setAdapter(mAdapter);
             }
 
@@ -121,7 +125,19 @@ public class UpdateStockActivity extends AppCompatActivity {
                 list.add(obj);
             }
         }
-        Adapter adapterClass = new Adapter(UpdateStockActivity.this, (ArrayList<Products>) list);
+        UpdateStockAdapter adapterClass = new UpdateStockAdapter(UpdateStockActivity.this, (ArrayList<Products>) list, UpdateStockActivity.this);
         mRecyclerView.setAdapter(adapterClass);
+    }
+
+    @Override
+    public void onProductUpdateClick(int position) {
+        myProducts.get(position);
+        productID = myProducts.get(position).getProductId();
+        System.out.println("PRODUCT PASSED" + productID);
+        Intent viewFullProductIntent = new Intent(this, FullProductToUpdate.class);
+        viewFullProductIntent.putExtra("selected_product_to_display", productID);
+        startActivity(viewFullProductIntent);
+
+
     }
 }

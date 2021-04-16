@@ -50,7 +50,7 @@ public class AddProductActivity extends AppCompatActivity {
     private FirebaseUser user;
 
     //UI Components
-    EditText productTitle, productDescription, productManufacturer, productPrice;
+    EditText productTitle, productDescription, productManufacturer, productPrice, productStockLevel;
     Spinner productCategorySpinner;
     ImageView productImage;
     private Uri selectedImage;
@@ -58,6 +58,7 @@ public class AddProductActivity extends AppCompatActivity {
 
     //Strings for uploading product to database
     String productTitleUpload, productDescriptionUpload,productManufacturerUpload, productPriceUpload, productCategoryUpload;
+    int  productStockUpload;
     Products myProducts;
 
     @Override
@@ -76,6 +77,7 @@ public class AddProductActivity extends AppCompatActivity {
         productDescription = (EditText) findViewById(R.id.description_et);
         productManufacturer = (EditText) findViewById(R.id.manufacturer_et);
         productPrice = (EditText) findViewById(R.id.price_et);
+        productStockLevel = (EditText) findViewById(R.id.stock_et);
         productCategorySpinner = (Spinner) findViewById(R.id.product_category_spinner);
         productImage = (ImageView) findViewById(R.id.uploadImageView);
         addProductBtn = (Button) findViewById(R.id.addProductButton);
@@ -154,6 +156,7 @@ public class AddProductActivity extends AppCompatActivity {
         productManufacturerUpload = productManufacturer.getText().toString();
         productPriceUpload = productPrice.getText().toString();
         productCategoryUpload = productCategorySpinner.getSelectedItem().toString();
+        productStockUpload = Integer.parseInt(productStockLevel.getText().toString());
 
         if (selectedImage != null) {
             StorageReference fileReference = mStorageRef.child(System.currentTimeMillis() + "." + getFileExtension(selectedImage));
@@ -170,7 +173,7 @@ public class AddProductActivity extends AppCompatActivity {
                     String productId = mDatabaseRef.push().getKey();
 
                     //Log.d(TAG, "onSuccess: firebase download url: " + downloadUrl.toString()); //use if testing...don't need this line.
-                    myProducts = new Products(productTitleUpload, productManufacturerUpload, productPriceUpload, productCategoryUpload, downloadUrl.toString(), productDescriptionUpload, productId);
+                    myProducts = new Products(productTitleUpload, productManufacturerUpload, productPriceUpload, productCategoryUpload, downloadUrl.toString(), productDescriptionUpload, productId, productStockUpload);
 
                     //String uploadId = mDatabaseRef.push().getKey();
                     mDatabaseRef.child(productId).setValue(myProducts);

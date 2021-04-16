@@ -9,12 +9,13 @@ public class Products {
     String image;
     String productDescription;
     String productId;
+    int stockAmount;
 
     public Products() {
 
     }
 
-    public Products(String title, String manufacturer, String price, String category, String image, String productDescription, String productId) {
+    public Products(String title, String manufacturer, String price, String category, String image, String productDescription, String productId, int stockAmount) {
         this.title = title;
         this.manufacturer = manufacturer;
         this.price = price;
@@ -22,6 +23,7 @@ public class Products {
         this.image = image;
         this.productDescription = productDescription;
         this.productId = productId;
+        this.stockAmount = stockAmount;
     }
 
     public String getTitle() {
@@ -78,5 +80,13 @@ public class Products {
 
     public void setProductId(String productId) {
         this.productId = productId;
+    }
+
+    public int getStockAmount() {
+        return stockAmount;
+    }
+
+    public void setStockAmount(int stockAmount) {
+        this.stockAmount = stockAmount;
     }
 }
