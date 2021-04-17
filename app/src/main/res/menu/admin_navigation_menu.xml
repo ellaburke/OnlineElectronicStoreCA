@@ -11,5 +11,10 @@
         android:title="Update Stock"
         android:icon="@drawable/ic_baseline_update_stock"/>
 
+    <item
+        android:id="@+id/CustomerDetailNav"
+        android:title="Customer Detail"
+        android:icon="@drawable/ic_baseline_s_user_circle_24"/>
+
 
 </menu>

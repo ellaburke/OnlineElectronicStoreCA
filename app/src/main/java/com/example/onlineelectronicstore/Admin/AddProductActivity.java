@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -19,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.onlineelectronicstore.CustomerDetailsAndPurchases.CustomerDetailsDisplayActivity;
+import com.example.onlineelectronicstore.LoginAndRegister.MainActivity;
 import com.example.onlineelectronicstore.R;
 import com.example.onlineelectronicstore.UpdateStock.UpdateStockActivity;
 import com.example.onlineelectronicstore.model.Products;
@@ -48,6 +51,7 @@ public class AddProductActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseRef;
     private String userId;
     private FirebaseUser user;
+    private FirebaseAuth mAuth;
 
     //UI Components
     EditText productTitle, productDescription, productManufacturer, productPrice, productStockLevel;
@@ -71,6 +75,7 @@ public class AddProductActivity extends AppCompatActivity {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("products");
         user = FirebaseAuth.getInstance().getCurrentUser();
         userId = user.getUid();
+        mAuth = FirebaseAuth.getInstance();
 
         //Init UI
         productTitle = (EditText) findViewById(R.id.title_et);
@@ -113,7 +118,7 @@ public class AddProductActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.admin_navigation_menu);
 
         //Set Home Selected
-        bottomNavigationView.setSelectedItemId(R.id.ProductsNav);
+        bottomNavigationView.setSelectedItemId(R.id.AddProductsNav);
 
         //Perform ItemSelectedListener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -121,6 +126,10 @@ public class AddProductActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.AddProductsNav:
+                        return true;
+                    case R.id.CustomerDetailNav:
+                        startActivity(new Intent(getApplicationContext(), CustomerDetailsDisplayActivity.class));
+                        overridePendingTransition(0, 0);
                         return true;
                     case R.id.UpdateStockNav:
                         startActivity(new Intent(getApplicationContext(), UpdateStockActivity.class));
@@ -190,6 +199,26 @@ public class AddProductActivity extends AppCompatActivity {
             Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.logout_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.logout_icon) {
+            mAuth.signOut();
+            Intent backToProfileIntent = new Intent(AddProductActivity.this, MainActivity.class);
+            startActivity(backToProfileIntent);
+            return true;
+        }
+
+        return true;
     }
 
 }

@@ -37,4 +37,6 @@
     <string name="price">Price</string>
     <string name="stock">Stock</string>
     <string name="update_stock">Update Stock</string>
+    <string name="admin_code_admin_use_only">Admin Code (Admin Use Only)</string>
+    <string name="go_back">Go Back</string>
 </resources>

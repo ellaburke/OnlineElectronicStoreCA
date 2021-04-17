@@ -33,7 +33,7 @@ public class RegisterAccountActivity extends AppCompatActivity {
     private User user;
 
     //UI Components
-    EditText firstNameET, lastNameET, emailET, phoneET, addressET, passwordET, confirmPasswordET;
+    EditText firstNameET, lastNameET, emailET, phoneET, addressET, passwordET, confirmPasswordET, adminET;
     Button createAccBtn, backBtn;
 
     @Override
@@ -53,6 +53,7 @@ public class RegisterAccountActivity extends AppCompatActivity {
         phoneET = (EditText) findViewById(R.id.phoneET);
         addressET = (EditText) findViewById(R.id.addressET);
         passwordET = (EditText) findViewById(R.id.passwordET);
+        adminET = (EditText) findViewById(R.id.adminOptionET);
         confirmPasswordET = (EditText) findViewById(R.id.confirmPasswordET);
         createAccBtn = (Button) findViewById(R.id.registerButton);
         backBtn = (Button) findViewById(R.id.homePageButton);
@@ -79,9 +80,16 @@ public class RegisterAccountActivity extends AppCompatActivity {
                 String lastName = lastNameET.getText().toString();
                 String phoneNumber = phoneET.getText().toString();
                 String address = addressET.getText().toString();
+                String admin = adminET.getText().toString();
                 String cardDetails = "Empty";
+                Boolean isAdmin = true;
+                if(admin.equals("12345")) {
+                    isAdmin = true;
+                }else{
+                    isAdmin = false;
+                }
 
-                user = new User(email,password,firstName,lastName,phoneNumber, address, cardDetails);
+                user = new User(email,password,firstName,lastName,phoneNumber, address, cardDetails, isAdmin);
                 registerUser(email,password);
             }
         });

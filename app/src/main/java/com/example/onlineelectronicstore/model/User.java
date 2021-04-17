@@ -8,6 +8,7 @@ public class User {
     private String phoneNumber;
     private String address;
     private String cardDetails;
+    private Boolean admin;
 
     public User() {
     }
@@ -17,7 +18,7 @@ public class User {
         this.password = password;
     }
 
-    public User(String email, String password, String firstName, String lastName, String phoneNumber, String address, String cardDetails) {
+    public User(String email, String password, String firstName, String lastName, String phoneNumber, String address, String cardDetails, Boolean admin) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -25,6 +26,7 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.cardDetails = cardDetails;
+        this.admin = admin;
     }
 
     public String getEmail() {
@@ -82,5 +84,14 @@ public class User {
     public void setCardDetails(String cardDetails) {
         this.cardDetails = cardDetails;
     }
+
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+
 }
 

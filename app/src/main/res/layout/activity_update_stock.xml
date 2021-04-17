@@ -6,8 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".UpdateStock.UpdateStockActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Stock"
+        android:id="@+id/updateStockTitle"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="22sp"
+        android:textColor="#000"/>
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/adminSearchView"
+        android:layout_below="@+id/updateStockTitle"
         android:layout_width="300dp"
         android:layout_height="?attr/actionBarSize"
         android:layout_margin="5dp"

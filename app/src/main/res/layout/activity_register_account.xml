@@ -82,6 +82,15 @@
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
             android:layout_gravity="center"
+            android:layout_marginBottom="15dp"/>
+
+        <EditText
+            android:id="@+id/adminOptionET"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/admin_code_admin_use_only"
+            android:inputType="number"
+            android:layout_gravity="center"
             android:layout_marginBottom="35dp"/>
 
         <Button

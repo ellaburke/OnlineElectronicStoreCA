@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,9 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.onlineelectronicstore.Admin.AddProductActivity;
+import com.example.onlineelectronicstore.CustomerDetailsAndPurchases.CustomerDetailsDisplayActivity;
 import com.example.onlineelectronicstore.R;
 import com.example.onlineelectronicstore.model.Products;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -89,6 +88,10 @@ public class FullProductToUpdate extends AppCompatActivity {
                         return true;
                     case R.id.UpdateStockNav:
                         startActivity(new Intent(getApplicationContext(), UpdateStockActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.CustomerDetailNav:
+                        startActivity(new Intent(getApplicationContext(), CustomerDetailsDisplayActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
                 }

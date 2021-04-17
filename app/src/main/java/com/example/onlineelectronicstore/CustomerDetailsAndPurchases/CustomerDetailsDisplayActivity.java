@@ -1,22 +1,26 @@
-package com.example.onlineelectronicstore.UpdateStock;
+package com.example.onlineelectronicstore.CustomerDetailsAndPurchases;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.onlineelectronicstore.Admin.AddProductActivity;
-import com.example.onlineelectronicstore.CustomerDetailsAndPurchases.CustomerDetailsDisplayActivity;
+import com.example.onlineelectronicstore.FullCustomerDetails;
 import com.example.onlineelectronicstore.LoginAndRegister.MainActivity;
 import com.example.onlineelectronicstore.R;
+import com.example.onlineelectronicstore.UpdateStock.FullProductToUpdate;
+import com.example.onlineelectronicstore.UpdateStock.UpdateStockActivity;
+import com.example.onlineelectronicstore.UpdateStock.UpdateStockAdapter;
 import com.example.onlineelectronicstore.model.Products;
+import com.example.onlineelectronicstore.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,38 +32,40 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpdateStockActivity extends AppCompatActivity implements UpdateStockAdapter.OnListingListener{
+public class CustomerDetailsDisplayActivity extends AppCompatActivity implements CustomerDetailAdapter.OnListingListener{
 
     //Firebase
     DatabaseReference mDatabaseRef;
     private FirebaseAuth mAuth;
-
     //Product
-    private List<Products> myProducts;
-    String productID;
+    private List<User> myCustomers;
+    String currentCustomerFName;
+    String currentCustomerLName;
+    String currentCustomerPhone;
+    String currentCustomerAddress;
+    String currentCustomerCardDetails;
+    String currentCustomerEmail;
+    String currentCustomerPassword;
 
     //RCV
     RecyclerView mRecyclerView;
     RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager mLayoutManager;
 
-    //SearchView
-    SearchView mSearchView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_stock);
+        setContentView(R.layout.activity_customer_details_display);
 
         //Init RCV
-        mRecyclerView = findViewById(R.id.adminProductRecyclerView);
+        mRecyclerView = findViewById(R.id.customerRecyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        myProducts = new ArrayList<>();
+        myCustomers = new ArrayList<>();
+
         //Init Firebase
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("products");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("user");
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mSearchView = findViewById(R.id.adminSearchView);
         mAuth = FirebaseAuth.getInstance();
 
 
@@ -67,7 +73,7 @@ public class UpdateStockActivity extends AppCompatActivity implements UpdateStoc
         BottomNavigationView bottomNavigationView = findViewById(R.id.admin_navigation_menu);
 
         //Set Home Selected
-        bottomNavigationView.setSelectedItemId(R.id.UpdateStockNav);
+        bottomNavigationView.setSelectedItemId(R.id.CustomerDetailNav);
 
         //Perform ItemSelectedListener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -79,6 +85,8 @@ public class UpdateStockActivity extends AppCompatActivity implements UpdateStoc
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.UpdateStockNav:
+                        startActivity(new Intent(getApplicationContext(), UpdateStockActivity.class));
+                        overridePendingTransition(0, 0);
                         return true;
                     case R.id.CustomerDetailNav:
                         startActivity(new Intent(getApplicationContext(), CustomerDetailsDisplayActivity.class));
@@ -89,50 +97,26 @@ public class UpdateStockActivity extends AppCompatActivity implements UpdateStoc
             }
         });
 
+
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    Products products = postSnapshot.getValue(Products.class);
-                    myProducts.add(products);
+                    User customer = postSnapshot.getValue(User.class);
+                    if(customer.getAdmin()== false) {
+                        myCustomers.add(customer);
+                    }
                 }
-                mAdapter = new UpdateStockAdapter(UpdateStockActivity.this, (ArrayList<Products>) myProducts, UpdateStockActivity.this);
+                mAdapter = new CustomerDetailAdapter(CustomerDetailsDisplayActivity.this, (ArrayList<User>) myCustomers, CustomerDetailsDisplayActivity.this);
                 mRecyclerView.setAdapter(mAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(UpdateStockActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CustomerDetailsDisplayActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
-
-        if (mSearchView != null) {
-            mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    search(newText);
-                    return true;
-                }
-            });
-
-        }
-    }
-
-    public void search(String str) {
-        ArrayList<Products> list = new ArrayList<>();
-        for (Products obj : myProducts) {
-            if (obj.getTitle().toLowerCase().contains(str.toLowerCase()) || obj.getCategory().toLowerCase().contains(str.toLowerCase()) || obj.getManufacturer().toLowerCase().contains(str.toLowerCase())) {
-                list.add(obj);
-            }
-        }
-        UpdateStockAdapter adapterClass = new UpdateStockAdapter(UpdateStockActivity.this, (ArrayList<Products>) list, UpdateStockActivity.this);
-        mRecyclerView.setAdapter(adapterClass);
     }
 
     @Override
@@ -147,7 +131,7 @@ public class UpdateStockActivity extends AppCompatActivity implements UpdateStoc
 
         if (id == R.id.logout_icon) {
             mAuth.signOut();
-            Intent backToProfileIntent = new Intent(UpdateStockActivity.this, MainActivity.class);
+            Intent backToProfileIntent = new Intent(CustomerDetailsDisplayActivity.this, MainActivity.class);
             startActivity(backToProfileIntent);
             return true;
         }
@@ -156,13 +140,32 @@ public class UpdateStockActivity extends AppCompatActivity implements UpdateStoc
     }
 
     @Override
-    public void onProductUpdateClick(int position) {
-        myProducts.get(position);
-        productID = myProducts.get(position).getProductId();
-        System.out.println("PRODUCT PASSED" + productID);
-        Intent viewFullProductIntent = new Intent(this, FullProductToUpdate.class);
-        viewFullProductIntent.putExtra("selected_product_to_display", productID);
-        startActivity(viewFullProductIntent);
+    public void onCustomerDetailClick(int position) {
+        myCustomers.get(position);
+
+
+        currentCustomerFName = myCustomers.get(position).getFirstName();
+        currentCustomerLName = myCustomers.get(position).getLastName();
+        currentCustomerPhone = myCustomers.get(position).getPhoneNumber();
+        currentCustomerEmail = myCustomers.get(position).getEmail();
+        currentCustomerAddress = myCustomers.get(position).getAddress();
+        currentCustomerCardDetails = myCustomers.get(position).getCardDetails();
+        currentCustomerPassword = myCustomers.get(position).getPassword();
+
+        Intent intent = new Intent(this, FullCustomerDetails.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("customer_first_name",currentCustomerFName);
+        bundle.putString("customer_last_name",currentCustomerLName);
+        bundle.putString("customer_phone",currentCustomerPhone);
+        bundle.putString("customer_email",currentCustomerEmail);
+        bundle.putString("customer_address",currentCustomerAddress);
+        bundle.putString("customer_card",currentCustomerCardDetails);
+        bundle.putString("customer_password",currentCustomerPassword);
+        intent.putExtras(bundle);
+        startActivity(intent);
+       // Intent viewFullProductIntent = new Intent(this, FullProductToUpdate.class);
+       // viewFullProductIntent.putExtra("selected_product_to_display", (Parcelable) currentCustomerID);
+        //startActivity(viewFullProductIntent);
 
 
     }

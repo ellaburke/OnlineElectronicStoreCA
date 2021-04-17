@@ -16,8 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineElectronicStore">
-        <activity android:name=".UpdateStock.FullProductToUpdate"
-            android:windowSoftInputMode="adjustNothing" ></activity>
+        <activity android:name=".FullCustomerDetails"></activity>
+        <activity android:name=".CustomerDetailsAndPurchases.CustomerDetailsDisplayActivity" />
+        <activity
+            android:name=".UpdateStock.FullProductToUpdate"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".UpdateStock.UpdateStockActivity"
             android:windowSoftInputMode="adjustNothing" />

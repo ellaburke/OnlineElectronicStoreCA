@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FullCustomerDetails">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/customerDetailsDisplayTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="Customer Details"
+                android:textColor="#000"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/firstNameTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/customerDetailsDisplayTV"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:text="First Name: "
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/firstNameDisplayed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/customerDetailsDisplayTV"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@+id/firstNameTitle"
+                android:text="First Name "
+                android:textColor="#000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/lastNameTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/firstNameTitle"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:text="Last Name: "
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lastNameDisplayed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/firstNameTitle"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/firstNameTitle"
+                android:text="First Name "
+                android:textColor="#000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/addressTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lastNameTitle"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:text="Address: "
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/addressDisplayed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lastNameDisplayed"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/addressTitle"
+                android:text="Address "
+                android:textColor="#000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/phoneTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/addressTitle"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:text="Phone Number: "
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/phoneDisplayed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/addressDisplayed"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/phoneTitle"
+                android:text="Phone Number "
+                android:textColor="#000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/emailTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/phoneTitle"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:text="Email: "
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/emailDisplayed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/phoneDisplayed"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/emailTitle"
+                android:text="Email "
+                android:textColor="#000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/passwordTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/emailTitle"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:text="Password: "
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/passwordDisplayed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/emailDisplayed"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/passwordTitle"
+                android:text="Password "
+                android:textColor="#000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/cardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/passwordTitle"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:text="Card Details: "
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/cardDisplayed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/passwordDisplayed"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/cardTitle"
+                android:text="Card Details "
+                android:textColor="#000"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/customerPurchaseHistoryTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cardDisplayed"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="Purchase History"
+                android:textColor="#000"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/customerPurchaseHistoryRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_below="@+id/customerPurchaseHistoryTV"
+                android:padding="4dp"
+                android:scrollbars="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteX="171dp"
+                tools:layout_editor_absoluteY="194dp" />
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_button"
+                android:layout_below="@+id/customerPurchaseHistoryRecyclerView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="60dp"
+                android:text="@string/go_back">
+
+            </Button>
+        </RelativeLayout>
+    </ScrollView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/admin_navigation_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/app_blue"
+                    app:itemBackground="@color/app_blue"
+                    app:itemIconTint="@drawable/selector"
+                    app:itemTextColor="@drawable/selector"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:menu="@menu/admin_navigation_menu" />
+
+            </RelativeLayout>
+
+
+</RelativeLayout>
