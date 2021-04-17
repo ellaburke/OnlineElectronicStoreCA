@@ -61,8 +61,9 @@ public class AddProductActivity extends AppCompatActivity {
     Button addProductBtn;
 
     //Strings for uploading product to database
-    String productTitleUpload, productDescriptionUpload,productManufacturerUpload, productPriceUpload, productCategoryUpload;
-    int  productStockUpload;
+    String productTitleUpload, productDescriptionUpload,productManufacturerUpload, productCategoryUpload;
+    String productPriceUpload;
+    int productStockUpload;
     Products myProducts;
 
     @Override
@@ -178,6 +179,8 @@ public class AddProductActivity extends AppCompatActivity {
                     Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
                     while (!urlTask.isSuccessful()) ;
                     Uri downloadUrl = urlTask.getResult();
+
+                    int finalValue=Integer.parseInt(productPriceUpload);
 
                     String productId = mDatabaseRef.push().getKey();
 

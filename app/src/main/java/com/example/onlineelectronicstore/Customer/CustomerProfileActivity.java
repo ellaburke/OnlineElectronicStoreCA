@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.onlineelectronicstore.ProductsToShop.AllProductsForSaleActivity;
 import com.example.onlineelectronicstore.R;
+import com.example.onlineelectronicstore.ProductsToShop.ShoppingCartActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -202,10 +203,12 @@ public class CustomerProfileActivity extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.MyProfileNav:
+                        startActivity(new Intent(getApplicationContext(), CustomerProfileActivity.class));
+                        overridePendingTransition(0, 0);
                         return true;
                     case R.id.MyCartNav:
-                        //startActivity(new Intent(getApplicationContext(), MyCart.class));
-                        //overridePendingTransition(0, 0);
+                        startActivity(new Intent(getApplicationContext(), ShoppingCartActivity.class));
+                        overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;

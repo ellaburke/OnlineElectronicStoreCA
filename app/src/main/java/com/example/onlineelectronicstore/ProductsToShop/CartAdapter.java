@@ -11,15 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlineelectronicstore.R;
-import com.example.onlineelectronicstore.UpdateStock.UpdateStockAdapter;
 import com.example.onlineelectronicstore.model.Products;
+import com.example.onlineelectronicstore.model.ShoppingCartProducts;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ExampleViewHolder> {
-    private List<Products> mProducts;
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ExampleViewHolder>{
+
+    private List<ShoppingCartProducts> mProducts;
     private Context mContext;
     private OnListingListener mOnListingListener;
 
@@ -32,9 +33,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ExampleViewHolder> {
 
         public ExampleViewHolder(@NonNull View itemView, OnListingListener onListingListener) {
             super(itemView);
-            mImageView = itemView.findViewById(R.id.product_image_display);
-            textViewName = itemView.findViewById(R.id.product_name_display);
-            textViewPrice = itemView.findViewById(R.id.product_price_display);
+            mImageView = itemView.findViewById(R.id.cartProductImage);
+            textViewName = itemView.findViewById(R.id.cartProductName);
+            textViewPrice = itemView.findViewById(R.id.cartProductPrice);
             mOnListingListener = onListingListener;
 
             itemView.setOnClickListener((View.OnClickListener) this);
@@ -52,8 +53,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ExampleViewHolder> {
 
     }
 
-
-    public Adapter(Context context, ArrayList<Products> productsForSale, OnListingListener onListingListener) {
+    public CartAdapter(Context context, ArrayList<ShoppingCartProducts> productsForSale, OnListingListener onListingListener) {
         //super();
         mContext = context;
         mProducts = productsForSale;
@@ -63,18 +63,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ExampleViewHolder> {
     @NonNull
     @Override
     public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.product_card, parent, false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.cart_card, parent, false);
         return new ExampleViewHolder(v, mOnListingListener);
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
-        Products currentProduct = mProducts.get(position);
-        holder.textViewName.setText(currentProduct.getTitle());
-        holder.textViewPrice.setText(currentProduct.getPrice());
+        ShoppingCartProducts currentProduct = mProducts.get(position);
+        holder.textViewName.setText(currentProduct.getProdcutName());
+        holder.textViewPrice.setText(currentProduct.getProductPrice());
         Picasso.get()
-                .load(currentProduct.getImage())
+                .load(currentProduct.getProductImage())
                 .placeholder(R.mipmap.ic_launcher)
                 .fit()
                 .centerCrop()
@@ -87,4 +87,5 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ExampleViewHolder> {
 
         return mProducts.size();
     }
+
 }

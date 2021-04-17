@@ -33,7 +33,8 @@ public class FullProductToUpdate extends AppCompatActivity {
     Products currentItem;
 
     //String values
-    String FPTitle, FPDescription, FPCategory, FPPrice, FPManufacturer, FPImage, FPID;
+    String FPTitle, FPDescription, FPCategory, FPManufacturer, FPImage, FPPrice,FPID;
+
     int FPStock;
 
     //UI Components

@@ -26,11 +26,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class AllProductsForSaleActivity extends AppCompatActivity {
+public class AllProductsForSaleActivity extends AppCompatActivity implements Adapter.OnListingListener{
 
     //Firebase
     DatabaseReference mDatabaseRef;
@@ -38,6 +37,7 @@ public class AllProductsForSaleActivity extends AppCompatActivity {
     //Product
     private List<Products> myProducts;
     private List<String> productNames;
+    String productID;
 
     //RCV
     RecyclerView mRecyclerView;
@@ -93,9 +93,10 @@ public class AllProductsForSaleActivity extends AppCompatActivity {
                     case R.id.MyProfileNav:
                         startActivity(new Intent(getApplicationContext(), CustomerProfileActivity.class));
                         overridePendingTransition(0, 0);
+                        return true;
                     case R.id.MyCartNav:
-                        //startActivity(new Intent(getApplicationContext(), MyCart.class));
-                        //overridePendingTransition(0, 0);
+                        startActivity(new Intent(getApplicationContext(), ShoppingCartActivity.class));
+                        overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;
@@ -110,7 +111,7 @@ public class AllProductsForSaleActivity extends AppCompatActivity {
                     myProducts.add(products);
                     productNames.add(products.getTitle());
                 }
-                mAdapter = new Adapter(AllProductsForSaleActivity.this, (ArrayList<Products>) myProducts);
+                mAdapter = new Adapter(AllProductsForSaleActivity.this, (ArrayList<Products>) myProducts, AllProductsForSaleActivity.this);
                 mRecyclerView.setAdapter(mAdapter);
             }
 
@@ -168,7 +169,22 @@ public class AllProductsForSaleActivity extends AppCompatActivity {
                 list.add(obj);
             }
         }
-        Adapter adapterClass = new Adapter(AllProductsForSaleActivity.this, (ArrayList<Products>) list);
+        Adapter adapterClass = new Adapter(AllProductsForSaleActivity.this, (ArrayList<Products>) list, AllProductsForSaleActivity.this);
         mRecyclerView.setAdapter(adapterClass);
+    }
+
+    @Override
+    public void onProductClick(int position) {
+        System.out.println("CLICKEDDDD");
+
+        myProducts.get(position);
+        productID = myProducts.get(position).getProductId();
+        System.out.println("PRODUCT PASSED" + productID);
+        Intent viewFullProductIntent = new Intent(this, PurchaseProductActivity.class);
+        viewFullProductIntent.putExtra("selected_product_to_display", productID);
+        startActivity(viewFullProductIntent);
+
+
+
     }
 }
