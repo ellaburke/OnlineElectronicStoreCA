@@ -1,10 +1,12 @@
-package com.example.onlineelectronicstore;
+package com.example.onlineelectronicstore.CustomerDetailsAndPurchases;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.example.onlineelectronicstore.R;
 
 public class FullCustomerDetails extends AppCompatActivity {
 

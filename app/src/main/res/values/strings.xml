@@ -9,6 +9,12 @@
         <item>Smart Tech</item>
     </string-array>
 
+    <string-array name="sort_array">
+        <item>Sort</item>
+        <item>Ascending</item>
+        <item>Descending</item>
+    </string-array>
+
     <string name="app_name">OnlineElectronicStore</string>
     <string name="email">Email</string>
     <string name="password">Password</string>

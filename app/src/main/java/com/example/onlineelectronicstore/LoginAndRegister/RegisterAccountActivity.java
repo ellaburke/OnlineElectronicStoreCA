@@ -122,7 +122,7 @@ public class RegisterAccountActivity extends AppCompatActivity {
     public void updateUI(FirebaseUser currentUser, String userId){
         //String keyId = mDatabase.push().getKey();
         mDatabase.child(userId).setValue(user);
-        Intent loginIntent = new Intent(this, MainActivity.class);
+        Intent loginIntent = new Intent(this, LoginActivity.class);
         startActivity(loginIntent);
     }
 }

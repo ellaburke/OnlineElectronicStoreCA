@@ -12,9 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.onlineelectronicstore.Admin.AddProductActivity;
+import com.example.onlineelectronicstore.AddProductsToDB.AddProductActivity;
 import com.example.onlineelectronicstore.CustomerDetailsAndPurchases.CustomerDetailsDisplayActivity;
-import com.example.onlineelectronicstore.LoginAndRegister.MainActivity;
+import com.example.onlineelectronicstore.LoginAndRegister.LoginActivity;
 import com.example.onlineelectronicstore.R;
 import com.example.onlineelectronicstore.model.Products;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -147,7 +147,7 @@ public class UpdateStockActivity extends AppCompatActivity implements UpdateStoc
 
         if (id == R.id.logout_icon) {
             mAuth.signOut();
-            Intent backToProfileIntent = new Intent(UpdateStockActivity.this, MainActivity.class);
+            Intent backToProfileIntent = new Intent(UpdateStockActivity.this, LoginActivity.class);
             startActivity(backToProfileIntent);
             return true;
         }

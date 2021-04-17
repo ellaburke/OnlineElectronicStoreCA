@@ -1,4 +1,4 @@
-package com.example.onlineelectronicstore.Customer;
+package com.example.onlineelectronicstore.ProductsToShop;
 
 import android.content.Context;
 import android.view.LayoutInflater;

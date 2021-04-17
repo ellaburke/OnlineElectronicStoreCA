@@ -12,8 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.onlineelectronicstore.Admin.AddProductActivity;
-import com.example.onlineelectronicstore.Customer.AllProductsForSaleActivity;
+import com.example.onlineelectronicstore.AddProductsToDB.AddProductActivity;
+import com.example.onlineelectronicstore.ProductsToShop.AllProductsForSaleActivity;
 import com.example.onlineelectronicstore.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,7 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     //Firebase
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         createAccountTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent registerIntent = new Intent(MainActivity.this, RegisterAccountActivity.class);
+                Intent registerIntent = new Intent(LoginActivity.this, RegisterAccountActivity.class);
                 startActivity(registerIntent);
             }
         });
@@ -71,16 +71,16 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             if(adminID.equals("12345")) {
-                                Intent intent = new Intent(MainActivity.this, AddProductActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, AddProductActivity.class);
                                 startActivity(intent);
                             }else if(!adminID.equals("12345")){
-                                Intent intent = new Intent(MainActivity.this, AllProductsForSaleActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, AllProductsForSaleActivity.class);
                                 startActivity(intent);
                             }
                         } else {
                             adminET.setError("Incorrect Admin Code");
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }

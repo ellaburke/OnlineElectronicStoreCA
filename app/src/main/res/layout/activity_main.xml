@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#70FFEB3B"
     android:orientation="vertical"
-    tools:context=".LoginAndRegister.MainActivity">
+    tools:context=".LoginAndRegister.LoginActivity">
 
     <ImageView
         android:id="@+id/burkesElectronicsLogo"

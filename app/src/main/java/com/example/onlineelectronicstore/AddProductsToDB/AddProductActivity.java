@@ -1,4 +1,4 @@
-package com.example.onlineelectronicstore.Admin;
+package com.example.onlineelectronicstore.AddProductsToDB;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +21,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.onlineelectronicstore.CustomerDetailsAndPurchases.CustomerDetailsDisplayActivity;
-import com.example.onlineelectronicstore.LoginAndRegister.MainActivity;
+import com.example.onlineelectronicstore.LoginAndRegister.LoginActivity;
 import com.example.onlineelectronicstore.R;
 import com.example.onlineelectronicstore.UpdateStock.UpdateStockActivity;
 import com.example.onlineelectronicstore.model.Products;
@@ -213,7 +213,7 @@ public class AddProductActivity extends AppCompatActivity {
 
         if (id == R.id.logout_icon) {
             mAuth.signOut();
-            Intent backToProfileIntent = new Intent(AddProductActivity.this, MainActivity.class);
+            Intent backToProfileIntent = new Intent(AddProductActivity.this, LoginActivity.class);
             startActivity(backToProfileIntent);
             return true;
         }

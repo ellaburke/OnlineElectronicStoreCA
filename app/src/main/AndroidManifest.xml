@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineElectronicStore">
-        <activity android:name=".FullCustomerDetails"></activity>
+        <activity android:name=".CustomerDetailsAndPurchases.FullCustomerDetails"></activity>
         <activity android:name=".CustomerDetailsAndPurchases.CustomerDetailsDisplayActivity" />
         <activity
             android:name=".UpdateStock.FullProductToUpdate"
@@ -28,15 +28,15 @@
             android:name=".Customer.CustomerProfileActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".Customer.AllProductsForSaleActivity"
+            android:name=".ProductsToShop.AllProductsForSaleActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".Admin.AddProductActivity"
+            android:name=".AddProductsToDB.AddProductActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".LoginAndRegister.RegisterAccountActivity"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".LoginAndRegister.MainActivity">
+        <activity android:name=".LoginAndRegister.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

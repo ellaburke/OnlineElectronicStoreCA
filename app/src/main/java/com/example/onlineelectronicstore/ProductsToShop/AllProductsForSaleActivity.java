@@ -1,4 +1,4 @@
-package com.example.onlineelectronicstore.Customer;
+package com.example.onlineelectronicstore.ProductsToShop;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,8 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.onlineelectronicstore.Customer.CustomerProfileActivity;
 import com.example.onlineelectronicstore.R;
 import com.example.onlineelectronicstore.model.Products;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class AllProductsForSaleActivity extends AppCompatActivity {
@@ -30,6 +37,7 @@ public class AllProductsForSaleActivity extends AppCompatActivity {
 
     //Product
     private List<Products> myProducts;
+    private List<String> productNames;
 
     //RCV
     RecyclerView mRecyclerView;
@@ -38,6 +46,7 @@ public class AllProductsForSaleActivity extends AppCompatActivity {
 
     //SearchView
     SearchView mSearchView;
+    Spinner sortSpinner;
 
 
     @Override
@@ -50,10 +59,23 @@ public class AllProductsForSaleActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         myProducts = new ArrayList<>();
+        productNames = new ArrayList<>();
         //Init Firebase
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("products");
         mRecyclerView.setLayoutManager(mLayoutManager);
         mSearchView = findViewById(R.id.searchView);
+
+        sortSpinner = (Spinner) findViewById(R.id.sort_spinner);
+
+        // Create an ArrayAdapter using the string array and a default spinner
+        ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter.createFromResource(this, R.array.sort_array,
+                android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        sortSpinner.setAdapter(staticAdapter);
 
         //Init btm nav
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -86,6 +108,7 @@ public class AllProductsForSaleActivity extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     Products products = postSnapshot.getValue(Products.class);
                     myProducts.add(products);
+                    productNames.add(products.getTitle());
                 }
                 mAdapter = new Adapter(AllProductsForSaleActivity.this, (ArrayList<Products>) myProducts);
                 mRecyclerView.setAdapter(mAdapter);
@@ -113,6 +136,29 @@ public class AllProductsForSaleActivity extends AppCompatActivity {
             });
 
         }
+
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Get the spinner selected item text
+                String selectedItemText = (String) parent.getItemAtPosition(position);
+                System.out.println("SELECTED IN SPINNER" + selectedItemText);
+                //List<String> names = Arrays.asList("Alex", "Charles", "Brian", "David");
+
+
+                if(selectedItemText.equals("Ascending")){
+                    Collections.sort(productNames);
+
+                }else if(selectedItemText.equals("Descending")){
+                    Collections.reverse(productNames);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     public void search(String str) {

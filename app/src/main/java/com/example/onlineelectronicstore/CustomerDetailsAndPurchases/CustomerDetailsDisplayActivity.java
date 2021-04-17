@@ -7,19 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.onlineelectronicstore.Admin.AddProductActivity;
-import com.example.onlineelectronicstore.FullCustomerDetails;
-import com.example.onlineelectronicstore.LoginAndRegister.MainActivity;
+import com.example.onlineelectronicstore.AddProductsToDB.AddProductActivity;
+import com.example.onlineelectronicstore.LoginAndRegister.LoginActivity;
 import com.example.onlineelectronicstore.R;
-import com.example.onlineelectronicstore.UpdateStock.FullProductToUpdate;
 import com.example.onlineelectronicstore.UpdateStock.UpdateStockActivity;
-import com.example.onlineelectronicstore.UpdateStock.UpdateStockAdapter;
-import com.example.onlineelectronicstore.model.Products;
 import com.example.onlineelectronicstore.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -131,7 +126,7 @@ public class CustomerDetailsDisplayActivity extends AppCompatActivity implements
 
         if (id == R.id.logout_icon) {
             mAuth.signOut();
-            Intent backToProfileIntent = new Intent(CustomerDetailsDisplayActivity.this, MainActivity.class);
+            Intent backToProfileIntent = new Intent(CustomerDetailsDisplayActivity.this, LoginActivity.class);
             startActivity(backToProfileIntent);
             return true;
         }
