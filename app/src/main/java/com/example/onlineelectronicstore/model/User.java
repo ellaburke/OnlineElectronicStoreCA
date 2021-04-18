@@ -1,6 +1,8 @@
 package com.example.onlineelectronicstore.model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String email;
     private String password;
     private String firstName;

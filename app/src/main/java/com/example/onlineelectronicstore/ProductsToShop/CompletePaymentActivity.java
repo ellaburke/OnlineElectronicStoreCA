@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.onlineelectronicstore.Customer.CustomerProfileActivity;
 import com.example.onlineelectronicstore.R;
+import com.example.onlineelectronicstore.model.Order;
 import com.example.onlineelectronicstore.model.Products;
 import com.example.onlineelectronicstore.model.ShoppingCartProducts;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -45,12 +46,17 @@ public class CompletePaymentActivity extends AppCompatActivity {
     int newStockAmount;
     int finalStockAmount;
     int takeAwayOne = 1;
+    String checkedOutProductID, checkedOutKeyID;
 
-    DatabaseReference updateRef, productRef, updateStockRef, updateStockRef2;
+    DatabaseReference updateRef, productRef, updateStockRef, updateStockRef2, removeFromCartRef, createOrderRef;
     private String userId;
     private FirebaseUser user;
     private FirebaseAuth mAuth;
     private List<String> myProducts;
+    private List<String> checkedOutIds;
+
+    Order order;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +67,10 @@ public class CompletePaymentActivity extends AppCompatActivity {
         DatabaseReference userRef = rootRef.child("user");
         updateRef = FirebaseDatabase.getInstance().getReference("user");
         productRef = FirebaseDatabase.getInstance().getReference("shoppingCart");
+        removeFromCartRef = FirebaseDatabase.getInstance().getReference("shoppingCart");
         updateStockRef = FirebaseDatabase.getInstance().getReference("products");
         updateStockRef2 = FirebaseDatabase.getInstance().getReference("products");
+        createOrderRef = FirebaseDatabase.getInstance().getReference("orders");
         mAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
         email = user.getEmail();
@@ -70,6 +78,7 @@ public class CompletePaymentActivity extends AppCompatActivity {
         userId = user.getUid();
         myProducts = new ArrayList<>();
         productUpdateIDList = new ArrayList<>();
+        checkedOutIds = new ArrayList<>();
 
         //Init UI
         cardNumber = (EditText) findViewById(R.id.cardNumberInput);
@@ -110,6 +119,9 @@ public class CompletePaymentActivity extends AppCompatActivity {
                     ShoppingCartProducts products = postSnapshot.getValue(ShoppingCartProducts.class);
                     if (products.getUserID().equals(userId)) {
                         myProducts.add(products.getProductID());
+                        checkedOutProductID = products.getProductID();
+                        checkedOutKeyID = products.getCartID();
+                        checkedOutIds.add(checkedOutKeyID);
                     }
                 }
 
@@ -135,10 +147,26 @@ public class CompletePaymentActivity extends AppCompatActivity {
                                 currentStockAmount = products.getStockAmount();
                                 newStockAmount = currentStockAmount -1;
                                 finalStockAmount = newStockAmount;
+
+                                String productName = products.getTitle();
+                                String productIDOrder = products.getProductId();
+                                String productPrice = products.getPrice();
+                                String productImage = products.getImage();
+
                                 System.out.println("NEW STOCK" + newStockAmount);
                                 productUpdateID = products.getProductId();
                                 productUpdateIDList.add(productUpdateID);
-                                updateStockRef2.child(productUpdateID).child("stockAmount").setValue(finalStockAmount);
+                                for(String keyID: checkedOutIds) {
+                                    FirebaseDatabase.getInstance().getReference("shoppingCart").child(keyID).removeValue();
+                                }
+
+                                String orderID = createOrderRef.push().getKey();
+
+                                //Log.d(TAG, "onSuccess: firebase download url: " + downloadUrl.toString()); //use if testing...don't need this line.
+                                order = new Order(productIDOrder,orderID,productName, productPrice,productImage, userId, email);
+
+                                //String uploadId = mDatabaseRef.push().getKey();
+                                createOrderRef.child(orderID).setValue(order);
                             }
                         }
 
@@ -162,6 +190,8 @@ public class CompletePaymentActivity extends AppCompatActivity {
                     Toast.makeText(CompletePaymentActivity.this, "Confirmation Email Sent", Toast.LENGTH_LONG).show();
 
 
+                Intent backToAllProducts = new Intent(CompletePaymentActivity.this, AllProductsForSaleActivity.class);
+                startActivity(backToAllProducts);
             }
 
 

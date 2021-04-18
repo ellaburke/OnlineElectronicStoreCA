@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class CustomerDetailsDisplayActivity extends AppCompatActivity implements
     String currentCustomerCardDetails;
     String currentCustomerEmail;
     String currentCustomerPassword;
+    User currentCustomeruserID;
 
     //RCV
     RecyclerView mRecyclerView;
@@ -146,18 +148,24 @@ public class CustomerDetailsDisplayActivity extends AppCompatActivity implements
         currentCustomerAddress = myCustomers.get(position).getAddress();
         currentCustomerCardDetails = myCustomers.get(position).getCardDetails();
         currentCustomerPassword = myCustomers.get(position).getPassword();
+        currentCustomeruserID = myCustomers.get(position);
 
         Intent intent = new Intent(this, FullCustomerDetails.class);
         Bundle bundle = new Bundle();
-        bundle.putString("customer_first_name",currentCustomerFName);
-        bundle.putString("customer_last_name",currentCustomerLName);
-        bundle.putString("customer_phone",currentCustomerPhone);
-        bundle.putString("customer_email",currentCustomerEmail);
-        bundle.putString("customer_address",currentCustomerAddress);
-        bundle.putString("customer_card",currentCustomerCardDetails);
-        bundle.putString("customer_password",currentCustomerPassword);
-        intent.putExtras(bundle);
-        startActivity(intent);
+//        bundle.putString("customer_first_name",currentCustomerFName);
+//        bundle.putString("customer_last_name",currentCustomerLName);
+//        bundle.putString("customer_phone",currentCustomerPhone);
+//        bundle.putString("customer_email",currentCustomerEmail);
+//        bundle.putString("customer_address",currentCustomerAddress);
+//        bundle.putString("customer_card",currentCustomerCardDetails);
+//        bundle.putString("customer_password",currentCustomerPassword);
+//        bundle.putExtra("customer_id", currentCustomeruserID);
+ //       intent.putExtras(bundle);
+ //       startActivity(intent);
+
+        Intent i = new Intent(CustomerDetailsDisplayActivity.this, FullCustomerDetails.class);
+        i.putExtra("customer_id", (Serializable) currentCustomeruserID);
+        startActivity(i);
        // Intent viewFullProductIntent = new Intent(this, FullProductToUpdate.class);
        // viewFullProductIntent.putExtra("selected_product_to_display", (Parcelable) currentCustomerID);
         //startActivity(viewFullProductIntent);

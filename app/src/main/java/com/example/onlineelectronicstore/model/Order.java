@@ -1,26 +1,27 @@
 package com.example.onlineelectronicstore.model;
 
-public class ShoppingCartProducts {
+public class Order {
 
     String productID;
-    String cartID;
+    String orderID;
     String prodcutName;
     String productPrice;
     String productImage;
     String userID;
+    String orderEmail;
 
-    public ShoppingCartProducts() {
+    public Order() {
 
     }
 
-    public ShoppingCartProducts(String productID, String cartID, String prodcutName, String productPrice, String productImage, String userID) {
+    public Order(String productID, String orderID, String prodcutName, String productPrice, String productImage, String userID, String orderEmail) {
         this.productID = productID;
-        this.cartID = cartID;
+        this.orderID = orderID;
         this.prodcutName = prodcutName;
         this.productPrice = productPrice;
         this.productImage = productImage;
         this.userID = userID;
-
+        this.orderEmail = orderEmail;
     }
 
     public String getProductID() {
@@ -31,12 +32,12 @@ public class ShoppingCartProducts {
         this.productID = productID;
     }
 
-    public String getCartID() {
-        return cartID;
+    public String getOrderID() {
+        return orderID;
     }
 
-    public void setCartID(String cartID) {
-        this.cartID = cartID;
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
     }
 
     public String getProdcutName() {
@@ -71,4 +72,11 @@ public class ShoppingCartProducts {
         this.userID = userID;
     }
 
+    public String getOrderEmail() {
+        return orderEmail;
+    }
+
+    public void setOrderEmail(String orderEmail) {
+        this.orderEmail = orderEmail;
+    }
 }
