@@ -1,20 +1,28 @@
 package com.example.onlineelectronicstore.UpdateStock;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.onlineelectronicstore.AddProductsToDB.AddProductActivity;
 import com.example.onlineelectronicstore.CustomerDetailsAndPurchases.CustomerDetailsDisplayActivity;
 import com.example.onlineelectronicstore.LoginAndRegister.LoginActivity;
+import com.example.onlineelectronicstore.ProductsToShop.Adapter;
+import com.example.onlineelectronicstore.ProductsToShop.AllProductsForSaleActivity;
 import com.example.onlineelectronicstore.R;
 import com.example.onlineelectronicstore.model.Products;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -26,7 +34,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UpdateStockActivity extends AppCompatActivity implements UpdateStockAdapter.OnListingListener{
 
@@ -45,6 +55,7 @@ public class UpdateStockActivity extends AppCompatActivity implements UpdateStoc
 
     //SearchView
     SearchView mSearchView;
+    Spinner sortSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +72,19 @@ public class UpdateStockActivity extends AppCompatActivity implements UpdateStoc
         mRecyclerView.setLayoutManager(mLayoutManager);
         mSearchView = findViewById(R.id.adminSearchView);
         mAuth = FirebaseAuth.getInstance();
+
+        sortSpinner = (Spinner) findViewById(R.id.sort_spinner2);
+
+        // Create an ArrayAdapter using the string array and a default spinner
+        ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter.createFromResource(this, R.array.sort_array,
+                android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        sortSpinner.setAdapter(staticAdapter);
+
 
 
         //Init btm nav
@@ -86,6 +110,21 @@ public class UpdateStockActivity extends AppCompatActivity implements UpdateStoc
                         return true;
                 }
                 return false;
+            }
+        });
+
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ArrayList<Products> sortedList = sortByOrder(parent.getItemAtPosition(position).toString());
+                mAdapter = new UpdateStockAdapter( UpdateStockActivity.this, sortedList,UpdateStockActivity.this);
+                mRecyclerView.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -166,4 +205,31 @@ public class UpdateStockActivity extends AppCompatActivity implements UpdateStoc
 
 
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public ArrayList<Products> sortByOrder(String sort) {
+        switch (sort) {
+            case "Name Ascending":
+                return (ArrayList<Products>) myProducts.stream()
+                        .sorted(Comparator.comparing(Products::getTitle)).collect(Collectors.toList());
+            case "Name Descending":
+                return (ArrayList<Products>) myProducts.stream()
+                        .sorted(Comparator.comparing(Products::getTitle).reversed()).collect(Collectors.toList());
+            case "Price Ascending":
+                return (ArrayList<Products>) myProducts.stream()
+                        .sorted(Comparator.comparing(Products::getPrice)).collect(Collectors.toList());
+            case "Price Descending":
+                return (ArrayList<Products>) myProducts.stream()
+                        .sorted(Comparator.comparing(Products::getPrice).reversed()).collect(Collectors.toList());
+
+            case "Manufacturer Descending":
+                return (ArrayList<Products>) myProducts.stream()
+                        .sorted(Comparator.comparing(Products::getManufacturer).reversed()).collect(Collectors.toList());
+            case "Manufacturer Ascending":
+                return (ArrayList<Products>) myProducts.stream()
+                        .sorted(Comparator.comparing(Products::getManufacturer)).collect(Collectors.toList());
+        }
+        return null;
+    }
+
 }

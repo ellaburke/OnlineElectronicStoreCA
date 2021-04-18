@@ -26,6 +26,16 @@
         app:queryHint="IPhone..."
         tools:ignore="MissingConstraints" />
 
+    <Spinner
+        android:id="@+id/sort_spinner2"
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@id/adminSearchView"
+        android:layout_height="50dp"
+        android:layout_below="@+id/updateStockTitle"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:spinnerMode="dropdown" />
+
 
 
     <androidx.recyclerview.widget.RecyclerView

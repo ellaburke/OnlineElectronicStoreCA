@@ -52,7 +52,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ExampleViewHolder> {
 
     }
 
-
     public Adapter(Context context, ArrayList<Products> productsForSale, OnListingListener onListingListener) {
         //super();
         mContext = context;

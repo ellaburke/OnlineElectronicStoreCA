@@ -99,21 +99,6 @@ public class AllProductsForSaleActivity extends AppCompatActivity implements Ada
         // Apply the adapter to the spinner
         sortSpinner.setAdapter(staticAdapter);
 
-        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ArrayList<Products> sortedList = sortByOrder(parent.getItemAtPosition(position).toString());
-                mAdapter = new Adapter( AllProductsForSaleActivity.this, sortedList,AllProductsForSaleActivity.this);
-                mRecyclerView.setAdapter(mAdapter);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
 
 
 
@@ -163,6 +148,21 @@ public class AllProductsForSaleActivity extends AppCompatActivity implements Ada
             }
         });
 
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ArrayList<Products> sortedList = sortByOrder(parent.getItemAtPosition(position).toString());
+                mAdapter = new Adapter( AllProductsForSaleActivity.this, sortedList,AllProductsForSaleActivity.this);
+                mRecyclerView.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         if (mSearchView != null) {
             mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
@@ -179,28 +179,7 @@ public class AllProductsForSaleActivity extends AppCompatActivity implements Ada
 
         }
 
-        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Get the spinner selected item text
-                String selectedItemText = (String) parent.getItemAtPosition(position);
-                System.out.println("SELECTED IN SPINNER" + selectedItemText);
-                //List<String> names = Arrays.asList("Alex", "Charles", "Brian", "David");
 
-
-                if(selectedItemText.equals("Ascending")){
-                    Collections.sort(productNames);
-
-                }else if(selectedItemText.equals("Descending")){
-                    Collections.reverse(productNames);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 
     public void search(String str) {
@@ -232,6 +211,8 @@ public class AllProductsForSaleActivity extends AppCompatActivity implements Ada
     @RequiresApi(api = Build.VERSION_CODES.N)
     public ArrayList<Products> sortByOrder(String sort) {
         switch (sort) {
+            case "All":
+                return (ArrayList<Products>) myProducts;
             case "Name Ascending":
                 return (ArrayList<Products>) myProducts.stream()
                         .sorted(Comparator.comparing(Products::getTitle)).collect(Collectors.toList());
