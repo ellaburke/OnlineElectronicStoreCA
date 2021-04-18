@@ -43,6 +43,8 @@ public class CompletePaymentActivity extends AppCompatActivity {
     private List<String> productUpdateIDList;
     int currentStockAmount;
     int newStockAmount;
+    int finalStockAmount;
+    int takeAwayOne = 1;
 
     DatabaseReference updateRef, productRef, updateStockRef, updateStockRef2;
     private String userId;
@@ -101,22 +103,42 @@ public class CompletePaymentActivity extends AppCompatActivity {
             }
         });
 
+        productRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    ShoppingCartProducts products = postSnapshot.getValue(ShoppingCartProducts.class);
+                    if (products.getUserID().equals(userId)) {
+                        myProducts.add(products.getProductID());
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(CompletePaymentActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
         payNowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                updateStockRef.addValueEventListener(new ValueEventListener() {
+                updateStockRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                             Products products = postSnapshot.getValue(Products.class);
                             if (myProducts.contains(products.getProductId())) {
                                 currentStockAmount = products.getStockAmount();
-                                newStockAmount = currentStockAmount - 1;
+                                newStockAmount = currentStockAmount -1;
+                                finalStockAmount = newStockAmount;
                                 System.out.println("NEW STOCK" + newStockAmount);
                                 productUpdateID = products.getProductId();
                                 productUpdateIDList.add(productUpdateID);
-                                //updateStockRef2.child(productUpdateID).child("stockAmount").setValue(newStockAmount);
+                                updateStockRef2.child(productUpdateID).child("stockAmount").setValue(finalStockAmount);
                             }
                         }
 
@@ -168,26 +190,6 @@ public class CompletePaymentActivity extends AppCompatActivity {
         });
 
 
-        productRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    ShoppingCartProducts products = postSnapshot.getValue(ShoppingCartProducts.class);
-                    if (products.getUserID().equals(userId)) {
-                        myProducts.add(products.getProductID());
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(CompletePaymentActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-
     }
 
     private boolean cardDetailsToSave() {
@@ -199,5 +201,10 @@ public class CompletePaymentActivity extends AppCompatActivity {
             return false;
         }
     }
+//
+//    private boolean updateStock() {
+//        updateStockRef2.child(productUpdateID).child("stockAmount").setValue(finalStockAmount);
+//        return true;
+//    }
 
 }
