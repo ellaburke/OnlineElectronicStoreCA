@@ -2,6 +2,8 @@ package com.example.onlineelectronicstore.ProductsToShop;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -14,8 +16,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.onlineelectronicstore.Customer.CustomerProfileActivity;
+import com.example.onlineelectronicstore.ProductReview.ReviewAdapter;
 import com.example.onlineelectronicstore.R;
 import com.example.onlineelectronicstore.model.Products;
 import com.example.onlineelectronicstore.model.ShoppingCartProducts;
@@ -56,7 +60,12 @@ public class PurchaseProductActivity extends AppCompatActivity {
     int totalPrice;
     Button purchaseButton, submitReview;
     ShoppingCartProducts shopCartProduct;
-    private DatabaseReference mDatabaseRef, mDatabaseRef2, mDatabaseRatingRef;
+    private DatabaseReference mDatabaseRef, mDatabaseRef2, mDatabaseRatingRef, mDatabaseAllReviewRef;
+
+    //RCV
+    RecyclerView mRecyclerView;
+    RecyclerView.Adapter mAdapter;
+    RecyclerView.LayoutManager mLayoutManager;
 
     //Rating
     productRating mProductRating;
@@ -66,6 +75,7 @@ public class PurchaseProductActivity extends AppCompatActivity {
     private List<Float> mRatings;
     Float floatValue;
     Float sum;
+    private List<productRating> allReviews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +87,21 @@ public class PurchaseProductActivity extends AppCompatActivity {
         productToDisplay = getIntent().getStringExtra("selected_product_to_display");
         mRatings = new ArrayList<>();
 
+        //Init RCV
+        mRecyclerView = findViewById(R.id.productReviewRecyclerView);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        allReviews = new ArrayList<>();
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+
         //Firebase
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference userRef = rootRef.child("products");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("shoppingCart");
         mDatabaseRef2 = FirebaseDatabase.getInstance().getReference("shoppingCart");
         mDatabaseRatingRef = FirebaseDatabase.getInstance().getReference("productRating");
+        mDatabaseAllReviewRef = FirebaseDatabase.getInstance().getReference("productRating");
         mAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
         userId = user.getUid();
@@ -245,6 +264,7 @@ public class PurchaseProductActivity extends AppCompatActivity {
                         Float rateNo = PR.getRateValue();
                         mRatings.add(rateNo);
                         System.out.println("RATING IS" + mRatings);
+                        allReviews.add(PR);
                     }
                 }
                 sum = 0.0f;
@@ -259,6 +279,9 @@ public class PurchaseProductActivity extends AppCompatActivity {
                     productSetRatingBar.setRating(0f);
                 }
 
+                mAdapter = new ReviewAdapter(PurchaseProductActivity.this, (ArrayList<productRating>) allReviews);
+                mRecyclerView.setAdapter(mAdapter);
+
             }
 
             @Override
@@ -266,5 +289,25 @@ public class PurchaseProductActivity extends AppCompatActivity {
 
             }
         });
+
+//        mDatabaseAllReviewRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+//                    productRating products = postSnapshot.getValue(productRating.class);
+//                    if(products.getProductID().equals(productToDisplay)) {
+//                        allReviews.add(products);
+//                    }
+//                }
+//                mAdapter = new ReviewAdapter(PurchaseProductActivity.this, (ArrayList<productRating>) allReviews);
+//                mRecyclerView.setAdapter(mAdapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(PurchaseProductActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
     }
 }
