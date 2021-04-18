@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -236,5 +237,24 @@ public class CompletePaymentActivity extends AppCompatActivity {
 //        updateStockRef2.child(productUpdateID).child("stockAmount").setValue(finalStockAmount);
 //        return true;
 //    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.go_back, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.go_back_icon) {
+            Intent backToProfileIntent = new Intent(CompletePaymentActivity.this, ShoppingCartActivity.class);
+            startActivity(backToProfileIntent);
+            return true;
+        }
+
+        return true;
+    }
 
 }

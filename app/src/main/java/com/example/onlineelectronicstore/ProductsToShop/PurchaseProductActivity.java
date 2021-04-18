@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -204,6 +205,7 @@ public class PurchaseProductActivity extends AppCompatActivity {
 
                 //String uploadId = mDatabaseRef.push().getKey();
                 mDatabaseRef.child(cartID).setValue(shopCartProduct);
+                Toast.makeText(PurchaseProductActivity.this, "Added to Cart", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -309,5 +311,24 @@ public class PurchaseProductActivity extends AppCompatActivity {
 //
 //            }
 //        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.go_back, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.go_back_icon) {
+            Intent backToProfileIntent = new Intent(PurchaseProductActivity.this, AllProductsForSaleActivity.class);
+            startActivity(backToProfileIntent);
+            return true;
+        }
+
+        return true;
     }
 }

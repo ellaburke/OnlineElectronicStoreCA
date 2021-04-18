@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,9 +17,12 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.onlineelectronicstore.Customer.CustomerProfileActivity;
+import com.example.onlineelectronicstore.LoginAndRegister.LoginActivity;
 import com.example.onlineelectronicstore.R;
 import com.example.onlineelectronicstore.model.Products;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +37,9 @@ public class AllProductsForSaleActivity extends AppCompatActivity implements Ada
 
     //Firebase
     DatabaseReference mDatabaseRef;
+    private String userId;
+    private FirebaseUser user;
+    private FirebaseAuth mAuth;
 
     //Product
     private List<Products> myProducts;
@@ -64,6 +71,9 @@ public class AllProductsForSaleActivity extends AppCompatActivity implements Ada
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("products");
         mRecyclerView.setLayoutManager(mLayoutManager);
         mSearchView = findViewById(R.id.searchView);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        userId = user.getUid();
+        mAuth = FirebaseAuth.getInstance();
 
         sortSpinner = (Spinner) findViewById(R.id.sort_spinner);
 
@@ -108,8 +118,10 @@ public class AllProductsForSaleActivity extends AppCompatActivity implements Ada
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     Products products = postSnapshot.getValue(Products.class);
-                    myProducts.add(products);
-                    productNames.add(products.getTitle());
+                    if(products.getStockAmount() != 0) {
+                        myProducts.add(products);
+                        productNames.add(products.getTitle());
+                    }
                 }
                 mAdapter = new Adapter(AllProductsForSaleActivity.this, (ArrayList<Products>) myProducts, AllProductsForSaleActivity.this);
                 mRecyclerView.setAdapter(mAdapter);
@@ -186,5 +198,25 @@ public class AllProductsForSaleActivity extends AppCompatActivity implements Ada
 
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.logout_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.logout_icon) {
+            Intent backToProfileIntent = new Intent(AllProductsForSaleActivity.this, LoginActivity.class);
+            mAuth.signOut();
+            startActivity(backToProfileIntent);
+            return true;
+        }
+
+        return true;
     }
 }

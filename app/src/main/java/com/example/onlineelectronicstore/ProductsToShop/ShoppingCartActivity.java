@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.onlineelectronicstore.Customer.CustomerProfileActivity;
+import com.example.onlineelectronicstore.LoginAndRegister.LoginActivity;
 import com.example.onlineelectronicstore.R;
 import com.example.onlineelectronicstore.model.Products;
 import com.example.onlineelectronicstore.model.ShoppingCartProducts;
@@ -148,5 +150,25 @@ public class ShoppingCartActivity extends AppCompatActivity implements CartAdapt
     @Override
     public void onProductClick(int position) {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.logout_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.logout_icon) {
+            Intent backToProfileIntent = new Intent(ShoppingCartActivity.this, LoginActivity.class);
+            mAuth.signOut();
+            startActivity(backToProfileIntent);
+            return true;
+        }
+
+        return true;
     }
 }

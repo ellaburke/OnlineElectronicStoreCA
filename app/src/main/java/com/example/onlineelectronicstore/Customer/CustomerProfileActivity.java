@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.onlineelectronicstore.LoginAndRegister.LoginActivity;
 import com.example.onlineelectronicstore.ProductsToShop.AllProductsForSaleActivity;
 import com.example.onlineelectronicstore.R;
 import com.example.onlineelectronicstore.ProductsToShop.ShoppingCartActivity;
@@ -175,6 +177,7 @@ public class CustomerProfileActivity extends AppCompatActivity {
                 profilePhone.setText(pNumber);
                 profileEmail.setText(email);
                 profileAddress.setText(address);
+                profileCreditCard.setText(creditCard);
 
 
             }
@@ -316,5 +319,25 @@ public class CustomerProfileActivity extends AppCompatActivity {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.logout_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.logout_icon) {
+            Intent backToProfileIntent = new Intent(CustomerProfileActivity.this, LoginActivity.class);
+            mAuth.signOut();
+            startActivity(backToProfileIntent);
+            return true;
+        }
+
+        return true;
     }
 }
