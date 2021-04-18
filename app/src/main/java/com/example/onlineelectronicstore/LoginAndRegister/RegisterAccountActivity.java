@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +23,19 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.regex.Pattern;
+
 public class RegisterAccountActivity extends AppCompatActivity {
+
+    //Create password pattern
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^" +
+            "(?=.*[0-9])" +         //at least 1 digit
+            "(?=.*[a-z])" +         //at least 1 lower case letter
+            "(?=.*[A-Z])" +         //at least 1 upper case letter
+            "(?=.*[a-zA-Z])" +      //any letter
+            "(?=\\S+$)" +           //no white spaces
+            ".{4,}" +               //at least 4 characters
+            "$");
 
     //Firebase
     private FirebaseAuth mAuth;
@@ -35,6 +48,7 @@ public class RegisterAccountActivity extends AppCompatActivity {
     //UI Components
     EditText firstNameET, lastNameET, emailET, phoneET, addressET, passwordET, confirmPasswordET, adminET;
     Button createAccBtn, backBtn;
+    String firstName,lastName, phoneNumber,address,admin, cardDetails, email,password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,20 +82,24 @@ public class RegisterAccountActivity extends AppCompatActivity {
         createAccBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (!validateEmail() | !validatePassword() | !validateTextFields()) {
+                    return;
+                }
                 //Create account on firebase
-                String email = emailET.getText().toString();
-                String password = passwordET.getText().toString();
+                email = emailET.getText().toString();
+                password = passwordET.getText().toString();
 
                 if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
                     Toast.makeText(getApplicationContext(),"Enter email and password", Toast.LENGTH_LONG).show();
                     return;
                 }
-                String firstName = firstNameET.getText().toString();
-                String lastName = lastNameET.getText().toString();
-                String phoneNumber = phoneET.getText().toString();
-                String address = addressET.getText().toString();
-                String admin = adminET.getText().toString();
-                String cardDetails = "Empty";
+                firstName = firstNameET.getText().toString();
+                lastName = lastNameET.getText().toString();
+                phoneNumber = phoneET.getText().toString();
+                address = addressET.getText().toString();
+                admin = adminET.getText().toString();
+                cardDetails = "Empty";
                 Boolean isAdmin = true;
                 if(admin.equals("12345")) {
                     isAdmin = true;
@@ -125,4 +143,60 @@ public class RegisterAccountActivity extends AppCompatActivity {
         Intent loginIntent = new Intent(this, LoginActivity.class);
         startActivity(loginIntent);
     }
+
+    private boolean validateEmail() {
+        email = emailET.getText().toString().trim();
+
+        if (email.isEmpty()) {
+            emailET.setError("Field can't be empty");
+            return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailET.setError("Please enter a valid email address");
+            return false;
+
+        } else {
+            emailET.setError(null);
+            return true;
+        }
+
+    }
+
+    private boolean validatePassword() {
+        password = passwordET.getText().toString().trim();
+
+        if (password.isEmpty()) {
+            passwordET.setError("Field can't be empty");
+            return false;
+        } else if (!PASSWORD_PATTERN.matcher(password).matches()) {
+            passwordET.setError("Password too weak");
+            return false;
+
+        } else {
+            passwordET.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateTextFields() {
+        firstName = firstNameET.getText().toString().trim();
+        lastName = lastNameET.getText().toString().trim();
+        phoneNumber = phoneET.getText().toString().trim();
+
+        if (firstName.isEmpty()) {
+            firstNameET.setError("Field can't be empty");
+            return false;
+        } else if (lastName.isEmpty()) {
+            lastNameET.setError("Field can't be empty");
+            return false;
+        } else if (phoneNumber.isEmpty()) {
+            phoneET.setError("Field can't be empty");
+            return false;
+        } else {
+            firstNameET.setError(null);
+            lastNameET.setError(null);
+            phoneET.setError(null);
+            return true;
+        }
+    }
+
 }

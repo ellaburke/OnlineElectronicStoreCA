@@ -119,7 +119,7 @@ public class FullProductToUpdate extends AppCompatActivity {
 
 
                         productTitle.setText(FPTitle);
-                        productDescription.setText(FPDescription);
+                        productDescription.setText(String.valueOf(FPDescription));
                         productCategory.setText(FPCategory);
                         productPrice.setText(FPPrice);
                         productManufacturer.setText(FPManufacturer);
@@ -144,7 +144,7 @@ public class FullProductToUpdate extends AppCompatActivity {
         updateDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isProductStockChanged() || isProductDescriptionChanged()) {
+                if (isProductStockChanged() || isProductPriceChanged()) {
                     Toast.makeText(FullProductToUpdate.this, "Product Updated", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(FullProductToUpdate.this, UpdateStockActivity.class);
                     startActivity(intent);
@@ -165,43 +165,14 @@ public class FullProductToUpdate extends AppCompatActivity {
         }
     }
 
-    private boolean isProductDescriptionChanged() {
-        if (!(FPDescription).equals(productDescription.getText().toString())) {
+    private boolean isProductPriceChanged() {
+        if (!FPPrice.equals(productPrice.getText().toString())) {
 
-            updateRef.child(productToDisplay).child("productDescription").setValue(productDescription.getText().toString());
+            updateRef.child(productToDisplay).child("price").setValue(productPrice.getText().toString());
             return true;
         } else {
             return false;
         }
     }
 
-//    private boolean isManufacturerChanged() {
-//        if (!FPManufacturer.equals(productManufacturer.getText().toString())) {
-//
-//            updateRef.child(productToDisplay).child("manufacturer").setValue(productManufacturer.getText().toString());
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-
-//    private boolean isProductPriceChanged() {
-//        if (!FPPrice.equals(productPrice.getText().toString())) {
-//
-//            updateRef.child(productToDisplay).child("price").setValue(productPrice.getText().toString());
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-
-//    private boolean isProductDescriptionChanged() {
-//        if (!FPDescription.equals(productDescription.getText().toString())) {
-//
-//            updateRef.child(productToDisplay).child("productDescription").setValue(productDescription.getText().toString());
-//            return true;
-//        } else {
-//            return false;
-//        }
- //   }
 }

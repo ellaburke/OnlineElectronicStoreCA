@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         } else {
-                            adminET.setError("Incorrect Admin Code");
+                            adminET.setError("Incorrect Login Details");
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
