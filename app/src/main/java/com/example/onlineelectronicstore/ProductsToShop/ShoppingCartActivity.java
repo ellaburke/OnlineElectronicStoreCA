@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements CartAdapt
 
     //Init UI
     TextView cartTotal, cartTotalWithShipping, cartShipping;
+    Button proceedToCheckout;
 
     //Firebase
     DatabaseReference mDatabaseRef;
@@ -73,6 +76,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements CartAdapt
         cartTotal = (TextView) findViewById(R.id.totalFigureTV);
         cartShipping = (TextView) findViewById(R.id.shippingFigureTV);
         cartTotalWithShipping = (TextView) findViewById(R.id.totalAfterShippingFigureTV);
+        proceedToCheckout = (Button) findViewById(R.id.proceedToCheckout);
 
         //Init btm nav
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -127,6 +131,15 @@ public class ShoppingCartActivity extends AppCompatActivity implements CartAdapt
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(ShoppingCartActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        proceedToCheckout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent viewFullProductIntent = new Intent(ShoppingCartActivity.this, CompletePaymentActivity.class);
+                startActivity(viewFullProductIntent);
 
             }
         });
