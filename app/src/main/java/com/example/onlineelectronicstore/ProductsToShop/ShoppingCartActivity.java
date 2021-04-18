@@ -1,10 +1,12 @@
 package com.example.onlineelectronicstore.ProductsToShop;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -48,6 +50,9 @@ public class ShoppingCartActivity extends AppCompatActivity implements CartAdapt
     double newTotalPrice;
     double finalTotalPrice;
 
+    //Builder Pattern
+    AlertDialog.Builder builder;
+
     //RCV
     RecyclerView mRecyclerView;
     RecyclerView.Adapter mAdapter;
@@ -84,7 +89,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements CartAdapt
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         //Set Home Selected
-        bottomNavigationView.setSelectedItemId(R.id.ProductsNav);
+        bottomNavigationView.setSelectedItemId(R.id.MyCartNav);
 
         //Perform ItemSelectedListener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -163,9 +168,23 @@ public class ShoppingCartActivity extends AppCompatActivity implements CartAdapt
         int id = item.getItemId();
 
         if (id == R.id.logout_icon) {
-            Intent backToProfileIntent = new Intent(ShoppingCartActivity.this, LoginActivity.class);
-            mAuth.signOut();
-            startActivity(backToProfileIntent);
+            builder = new AlertDialog.Builder(this);
+            builder.setMessage("Do you wish to log out?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent backToProfileIntent = new Intent(ShoppingCartActivity.this, LoginActivity.class);
+                    mAuth.signOut();
+                    startActivity(backToProfileIntent);
+
+                }
+            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
             return true;
         }
 

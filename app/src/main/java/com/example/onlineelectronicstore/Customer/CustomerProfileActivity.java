@@ -2,8 +2,10 @@ package com.example.onlineelectronicstore.Customer;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -52,6 +54,9 @@ public class CustomerProfileActivity extends AppCompatActivity {
     private String userId;
     private FirebaseUser user;
     private FirebaseAuth mAuth;
+
+    //Builder Pattern
+    AlertDialog.Builder builder;
 
     //UI Components
     EditText profileFName, profileLName, profileAddress, profilePhone, profileEmail, profileCreditCard;
@@ -332,9 +337,23 @@ public class CustomerProfileActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.logout_icon) {
-            Intent backToProfileIntent = new Intent(CustomerProfileActivity.this, LoginActivity.class);
-            mAuth.signOut();
-            startActivity(backToProfileIntent);
+            builder = new AlertDialog.Builder(this);
+            builder.setMessage("Do you wish to log out?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent backToProfileIntent = new Intent(CustomerProfileActivity.this, LoginActivity.class);
+                    mAuth.signOut();
+                    startActivity(backToProfileIntent);
+
+                }
+            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
             return true;
         }
 

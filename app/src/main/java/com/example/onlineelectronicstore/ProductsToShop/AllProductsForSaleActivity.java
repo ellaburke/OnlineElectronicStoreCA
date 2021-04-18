@@ -1,12 +1,16 @@
 package com.example.onlineelectronicstore.ProductsToShop;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +35,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AllProductsForSaleActivity extends AppCompatActivity implements Adapter.OnListingListener{
 
@@ -55,6 +61,9 @@ public class AllProductsForSaleActivity extends AppCompatActivity implements Ada
     SearchView mSearchView;
     Spinner sortSpinner;
 
+    //Builder Pattern
+    AlertDialog.Builder builder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +75,8 @@ public class AllProductsForSaleActivity extends AppCompatActivity implements Ada
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         myProducts = new ArrayList<>();
-        productNames = new ArrayList<>();
+        mAdapter = new Adapter(AllProductsForSaleActivity.this, (ArrayList<Products>) myProducts, AllProductsForSaleActivity.this);
+        mRecyclerView.setAdapter(mAdapter);
         //Init Firebase
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("products");
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -74,6 +84,8 @@ public class AllProductsForSaleActivity extends AppCompatActivity implements Ada
         user = FirebaseAuth.getInstance().getCurrentUser();
         userId = user.getUid();
         mAuth = FirebaseAuth.getInstance();
+
+        productNames = new ArrayList<>();
 
         sortSpinner = (Spinner) findViewById(R.id.sort_spinner);
 
@@ -86,6 +98,24 @@ public class AllProductsForSaleActivity extends AppCompatActivity implements Ada
 
         // Apply the adapter to the spinner
         sortSpinner.setAdapter(staticAdapter);
+
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ArrayList<Products> sortedList = sortByOrder(parent.getItemAtPosition(position).toString());
+                mAdapter = new Adapter( AllProductsForSaleActivity.this, sortedList,AllProductsForSaleActivity.this);
+                mRecyclerView.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
 
         //Init btm nav
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -123,8 +153,7 @@ public class AllProductsForSaleActivity extends AppCompatActivity implements Ada
                         productNames.add(products.getTitle());
                     }
                 }
-                mAdapter = new Adapter(AllProductsForSaleActivity.this, (ArrayList<Products>) myProducts, AllProductsForSaleActivity.this);
-                mRecyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -200,6 +229,32 @@ public class AllProductsForSaleActivity extends AppCompatActivity implements Ada
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public ArrayList<Products> sortByOrder(String sort) {
+        switch (sort) {
+            case "Name Ascending":
+                return (ArrayList<Products>) myProducts.stream()
+                        .sorted(Comparator.comparing(Products::getTitle)).collect(Collectors.toList());
+            case "Name Descending":
+                return (ArrayList<Products>) myProducts.stream()
+                        .sorted(Comparator.comparing(Products::getTitle).reversed()).collect(Collectors.toList());
+            case "Price Ascending":
+                return (ArrayList<Products>) myProducts.stream()
+                        .sorted(Comparator.comparing(Products::getPrice)).collect(Collectors.toList());
+            case "Price Descending":
+                return (ArrayList<Products>) myProducts.stream()
+                        .sorted(Comparator.comparing(Products::getPrice).reversed()).collect(Collectors.toList());
+
+            case "Manufacturer Descending":
+                return (ArrayList<Products>) myProducts.stream()
+                        .sorted(Comparator.comparing(Products::getManufacturer).reversed()).collect(Collectors.toList());
+            case "Manufacturer Ascending":
+                return (ArrayList<Products>) myProducts.stream()
+                        .sorted(Comparator.comparing(Products::getManufacturer)).collect(Collectors.toList());
+        }
+        return null;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.logout_menu, menu);
@@ -211,9 +266,23 @@ public class AllProductsForSaleActivity extends AppCompatActivity implements Ada
         int id = item.getItemId();
 
         if (id == R.id.logout_icon) {
-            Intent backToProfileIntent = new Intent(AllProductsForSaleActivity.this, LoginActivity.class);
-            mAuth.signOut();
-            startActivity(backToProfileIntent);
+            builder = new AlertDialog.Builder(this);
+            builder.setMessage("Do you wish to log out?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent backToProfileIntent = new Intent(AllProductsForSaleActivity.this, LoginActivity.class);
+                    mAuth.signOut();
+                    startActivity(backToProfileIntent);
+
+                }
+            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
             return true;
         }
 
